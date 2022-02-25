@@ -9,12 +9,17 @@ import SwiftUI
 
 @main
 struct Assignment1App: App {
-    let persistenceController = PersistenceController.shared
-
+    @State private var showLunchScreen: Bool = true
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            ZStack{
+                LoginView().navigationBarHidden(true)
+                ZStack{
+                    if showLunchScreen{
+                        LaunchView(showLaunch: $showLunchScreen).transition(.move(edge: .leading))
+                    }
+                }.zIndex(2.0)
+            }
         }
     }
 }
